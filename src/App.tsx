@@ -16,7 +16,6 @@ import {
   ChevronRight,
   Shield,
 } from 'lucide-react';
-import { supabase } from './lib/supabase';
 
 function App() {
   const navigate = useNavigate();
@@ -64,23 +63,6 @@ function App() {
         urlParams: urlParamsObject,
         referrer: document.referrer || '',
       };
-
-      // Save to Supabase
-      const { error: supabaseError } = await supabase.from('applications').insert([
-        {
-          full_name: formData.fullName,
-          whatsapp: formData.whatsapp,
-          responsible_name: isMinor ? formData.responsibleName : '',
-          responsible_phone: isMinor ? formData.responsiblePhone : '',
-          region: formData.region,
-          created_at: new Date().toISOString(),
-        },
-      ]);
-
-      if (supabaseError) {
-        console.error('Supabase error:', supabaseError);
-        throw new Error('Erro ao salvar sua inscrição. Por favor, tente novamente.');
-      }
 
       // Send webhook with additional URL data
       const webhookResponse = await fetch(
