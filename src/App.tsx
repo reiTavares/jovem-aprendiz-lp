@@ -31,6 +31,7 @@ function App() {
     region: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const formatPhoneForWebhook = (phone: string) => {
     return `55${phone.replace(/\D/g, '')}`;
@@ -39,6 +40,7 @@ function App() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
 
     try {
       // Get all URL parameters
@@ -64,37 +66,44 @@ function App() {
       };
 
       // Save to Supabase
-      const { error } = await supabase.from('applications').insert([
+      const { error: supabaseError } = await supabase.from('applications').insert([
         {
           full_name: formData.fullName,
           whatsapp: formData.whatsapp,
           responsible_name: isMinor ? formData.responsibleName : '',
           responsible_phone: isMinor ? formData.responsiblePhone : '',
           region: formData.region,
+          created_at: new Date().toISOString(),
         },
       ]);
 
-      if (error) throw error;
+      if (supabaseError) {
+        console.error('Supabase error:', supabaseError);
+        throw new Error('Erro ao salvar sua inscrição. Por favor, tente novamente.');
+      }
 
       // Send webhook with additional URL data
-      await fetch(
+      const webhookResponse = await fetch(
         'https://hook.profusaodigital.com/webhook/programa-jovem-aprendiz-microlins',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Origin': window.location.origin,
           },
           body: JSON.stringify(webhookData),
         }
       );
 
+      if (!webhookResponse.ok) {
+        throw new Error('Erro ao processar sua inscrição. Por favor, tente novamente.');
+      }
+
       // Redirect to thank you page
       navigate(`/obrigado?nome=${encodeURIComponent(formData.fullName)}`);
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert(
-        'Ocorreu um erro ao enviar sua inscrição. Por favor, tente novamente.'
-      );
+      setError(error instanceof Error ? error.message : 'Ocorreu um erro ao enviar sua inscrição. Por favor, tente novamente.');
     } finally {
       setIsSubmitting(false);
     }
@@ -173,20 +182,20 @@ function App() {
     },
   ];
 
-const videoTestimonials = [
-  {
-    name: "Carolina Silva",
-    vimeoEmbedUrl: "https://player.vimeo.com/video/1082032380"
-  },
-  {
-    name: "Gustavo Lira",
-    vimeoEmbedUrl: "https://player.vimeo.com/video/1082032406"
-  },
-  {
-    name: "Laís Sousa",
-    vimeoEmbedUrl: "https://player.vimeo.com/video/1082032355"
-  }
-];
+  const videoTestimonials = [
+    {
+      name: "Carolina Silva",
+      vimeoEmbedUrl: "https://player.vimeo.com/video/1082032380"
+    },
+    {
+      name: "Gustavo Lira",
+      vimeoEmbedUrl: "https://player.vimeo.com/video/1082032406"
+    },
+    {
+      name: "Laís Sousa",
+      vimeoEmbedUrl: "https://player.vimeo.com/video/1082032355"
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -223,6 +232,11 @@ const videoTestimonials = [
           <h2 className="text-3xl font-bold text-center mb-8">
             Faça sua Inscrição
           </h2>
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-700">
+              {error}
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="flex items-center justify-between mb-6">
               <span className="text-sm font-medium text-gray-700">
