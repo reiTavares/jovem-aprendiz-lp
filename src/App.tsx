@@ -211,7 +211,7 @@ function App() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8">
           <div className="text-center">
             <img
-              src="https://jovemaprendiz.b-cdn.net/logo%20jovem%20aprendiz%20microlins.png"
+              src="https://profusaodigital.com.br/wp-content/uploads/2025/05/logo-jovem-aprendiz-microlins.png"
               alt="Jovem Aprendiz Logo"
               className="mx-auto h-20 md:h-24 w-auto mb-6"
             />
@@ -416,7 +416,7 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white p-6 rounded-xl shadow-md text-center">
               <img
-                src="https://jovemaprendiz.b-cdn.net/logo%20jovem%20aprendiz%20microlins.png"
+                src="https://profusaodigital.com.br/wp-content/uploads/2025/05/logo-jovem-aprendiz-microlins.png"
                 alt="Formação Profissional"
                 className="mx-auto h-12 w-auto mb-4"
               />
@@ -531,7 +531,7 @@ function App() {
               {
                 icon: (
                   <img
-                    src="https://jovemaprendiz.b-cdn.net/logo%20jovem%20aprendiz%20microlins.png"
+                    src="https://profusaodigital.com.br/wp-content/uploads/2025/05/logo-jovem-aprendiz-microlins.png"
                     alt="Início"
                     className="h-12 w-auto"
                   />
@@ -591,7 +591,7 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div>
               <img
-                src="https://jovemaprendiz.b-cdn.net/logo%20jovem%20aprendiz%20microlins.png"
+                src="https://profusaodigital.com.br/wp-content/uploads/2025/05/logo-jovem-aprendiz-microlins.png"
                 alt="Jovem Aprendiz Logo"
                 className="h-12 w-auto mb-4"
               />
