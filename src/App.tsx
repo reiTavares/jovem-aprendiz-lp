@@ -164,20 +164,6 @@ function App() {
     },
   ];
 
-  const videoTestimonials = [
-    {
-      name: "Carolina Silva",
-      vimeoEmbedUrl: "https://player.vimeo.com/video/1082032380"
-    },
-    {
-      name: "Gustavo Lira",
-      vimeoEmbedUrl: "https://player.vimeo.com/video/1082032406"
-    },
-    {
-      name: "Laís Sousa",
-      vimeoEmbedUrl: "https://player.vimeo.com/video/1082032355"
-    }
-  ];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -453,34 +439,6 @@ function App() {
                   </div>
                 </div>
                 <p className="text-gray-700">{testimonial.text}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Video Testimonials Section */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-center mb-12">
-            Depoimentos em Vídeo
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {videoTestimonials.map((video, index) => (
-              <div key={index} className="bg-white p-6 rounded-xl shadow-md">
-                <h3 className="text-lg font-semibold mb-4 text-center">
-                  {video.name}
-                </h3>
-                <div className="aspect-[9/16]">
-                  <iframe
-                    src={video.vimeoEmbedUrl}
-                    frameBorder="0"
-                    allow="autoplay; fullscreen; picture-in-picture"
-                    allowFullScreen
-                    className="w-full h-full rounded-lg"
-                    title={`Depoimento de ${video.name}`}
-                  ></iframe>
-                </div>
               </div>
             ))}
           </div>
